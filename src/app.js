@@ -20,9 +20,12 @@ app.use(cookieParser());
 // Sample route
 app.get("/", async (req, res) => {
     // Find user by email
-    const user = await prisma.user.findUnique({ where: { email: "test@test.com" } });
+    const user = await prisma.user.findMany({ where: { email: "test@test.com" } });
     res.send('API is running 🚀', user);
 });
+// 👇 Auth routes
+const authRoutes = require('./routes/auth.routes');
+app.use('/api/auth', authRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
